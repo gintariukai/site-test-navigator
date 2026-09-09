@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="lt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0e17">
+    <meta name="description" content="Atrask vibe coding kelią: 8 praktiniai etapai nuo pirmos idėjos iki veikiančio produkto. Mokykis kurti kartu su AI.">
+    <title>Vibe Coding Navigator | Nuo idėjos iki produkto</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}" href="/favicon.svg">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+    <script defer th:src="@{/js/app.js}" src="/js/app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#kelias">Pereiti prie etapų</a>
+<svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+        <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-14-2 18"/></symbol>
+        <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></symbol>
+        <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></symbol>
+        <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+        <symbol id="i-1" viewBox="0 0 24 24"><path d="M9 18h6m-6 3h6M8 14a6 6 0 1 1 8 0c-1 1-1 2-1 2H9s0-1-1-2Z"/></symbol>
+        <symbol id="i-2" viewBox="0 0 24 24"><path d="M20 15a2 2 0 0 1-2 2H9l-5 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2Z"/><path d="M8 8h8m-8 4h5"/></symbol>
+        <symbol id="i-3" viewBox="0 0 24 24"><rect x="8" y="3" width="8" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="16" width="7" height="5" rx="1"/><path d="M12 8v4m-6 4v-4h12v4"/></symbol>
+        <symbol id="i-4" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16"/></symbol>
+        <symbol id="i-5" viewBox="0 0 24 24"><path d="M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7Z"/><path d="m8 12 3 3 5-6"/></symbol>
+        <symbol id="i-6" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="13" rx="5"/><path d="m9 3 3 4 3-4M3 9l4 2m-4 5h4m-3 6 4-4m13-9-4 2m4 5h-4m3 6-4-4M12 11v5"/></symbol>
+        <symbol id="i-7" viewBox="0 0 24 24"><path d="M9 3h6m-5 0v7L4 19a1 1 0 0 0 1 2h14a1 1 0 0 0 1-2l-6-9V3M7 16h10"/><path d="M10 12h.01m3 7h.01"/></symbol>
+        <symbol id="i-8" viewBox="0 0 24 24"><path d="M9 15c-2-4 3-11 12-12 0 9-8 14-12 12Zm0 0-3 3m1-8H3l-1 6 5-1m7 2-1 5 6-1v-5M5 19l-2 2"/><circle cx="16" cy="8" r="2"/></symbol>
+    </defs>
+</svg>
+
+<header class="site-header">
+    <div class="container nav-inner">
+        <a class="brand" href="#pradzia" aria-label="Navigator pradžia">
+            <span class="brand-mark"><svg class="icon"><use href="#i-code"/></svg></span>
+            <span>Navigator<span class="brand-dot">.</span></span>
+        </a>
+        <nav aria-label="Pagrindinė navigacija">
+            <a class="nav-active" href="#kelias">Kelias</a>
+            <a href="#apie">Apie</a>
+        </nav>
+        <span class="nav-note"><span class="status-dot"></span> Mažiau chaoso. Daugiau kūrybos.</span>
+    </div>
+</header>
+
+<main id="pradzia">
+    <section class="hero container" aria-labelledby="hero-title">
+        <div class="hero-copy">
+            <div class="eyebrow"><span class="tiny-spark">✦</span> TAVO IDĖJOS. AI GALIMYBĖS.</div>
+            <h1 id="hero-title">Vibe Coding<br><span>Navigator</span><span class="heading-dot">.</span></h1>
+            <p class="hero-subtitle">Nuo idėjos iki veikiančio produkto <span class="desktop-break">— vienas žingsnis po kito.</span></p>
+            <p class="hero-description">Nežinai, nuo ko pradėti kurti su AI? Atrask aiškų kelią, išbandyk praktinius pavyzdžius ir paversk savo idėją tuo, kas iš tikrųjų veikia.</p>
+            <div class="hero-actions">
+                <a class="button button-primary" href="#kelias">Pradėti kelionę <svg class="icon"><use href="#i-arrow"/></svg></a>
+                <span class="hero-meta"><span class="mini-squares"><i></i><i></i><i></i><i></i></span> 8 etapai. Neribotos galimybės.</span>
+            </div>
+        </div>
+        <div class="hero-visual" aria-label="Kūrimo ciklas: idėja, kūrimas, patikra ir paleidimas">
+            <div class="visual-grid"></div>
+            <div class="visual-topline"><span><span class="status-dot"></span> WORKSPACE / YOUR NEXT BIG THING</span><span>v.01</span></div>
+            <div class="orbit orbit-outer"></div><div class="orbit orbit-inner"></div>
+            <div class="orbit-label label-idea"><span class="node-icon violet"><svg class="icon"><use href="#i-1"/></svg></span><span><small>01 / ATRASK</small>Viskas prasideda nuo idėjos</span><span class="node-spark">✦</span></div>
+            <div class="core-node"><svg><use href="#i-code"/></svg><span>YOU + AI</span></div>
+            <div class="orbit-label label-build"><span class="node-icon blue"><svg class="icon"><use href="#i-4"/></svg></span><span><small>02 / SUKURK</small>Po vieną žingsnį</span></div>
+            <div class="orbit-label label-ship"><span class="node-icon green"><svg class="icon"><use href="#i-8"/></svg></span><span><small>03 / PALEISK</small>Idėja tampa realybe</span><span class="live-dot"></span></div>
+            <span class="floating-plus plus-one">+</span><span class="floating-plus plus-two">+</span>
+            <div class="visual-bottomline"><span class="terminal-caret">&gt;_</span><span>build something that matters<span class="cursor">_</span></span><span class="visual-dots">•••</span></div>
+        </div>
+    </section>
+
+    <div class="container journey-summary">
+        <div class="summary-item"><span class="summary-number">01—08</span><span>Aiškus kelias<br><strong>nuo starto iki finišo</strong></span></div>
+        <div class="summary-item"><svg class="icon"><use href="#i-code"/></svg><span>Ne tik teorija<br><strong>praktiniai AI pavyzdžiai</strong></span></div>
+        <div class="summary-item"><svg class="icon"><use href="#i-check"/></svg><span>Tavo tempas<br><strong>išsaugomas progresas</strong></span></div>
+        <span class="summary-caption">LEARN. BUILD. REPEAT.</span>
+    </div>
+
+    <section class="journey container" id="kelias" aria-labelledby="journey-title">
+        <div class="section-heading">
+            <div><div class="eyebrow section-eyebrow">NUO „O JEIGU…“ IKI „VEIKIA!“</div><h2 id="journey-title">Tavo kūrimo kelias<span class="text-violet">.</span></h2><p>Kiekvienas didelis produktas prasideda nuo mažo žingsnio. Ženk pirmąjį.</p></div>
+            <span class="section-count">8 ETAPAI <span>↙</span></span>
+        </div>
+
+        <div class="progress-panel">
+            <div class="progress-symbol"><svg class="icon"><use href="#i-3"/></svg></div>
+            <div class="progress-main">
+                <div class="progress-label-row"><span id="progress-label" role="status" aria-live="polite"><strong id="progress-count">0</strong> iš 8 etapų peržiūrėta</span><span id="progress-percent">0%</span></div>
+                <progress id="journey-progress" max="8" value="0" aria-labelledby="progress-label">0 iš 8</progress>
+                <span class="progress-hint" id="progress-hint">Tavo kelionė prasideda čia. Pasirink pirmą etapą.</span>
+            </div>
+            <button class="reset-button" id="reset-progress" type="button" disabled><svg class="icon"><use href="#i-reset"/></svg> Reset progress</button>
+        </div>
+        <p class="storage-notice" id="storage-notice" role="status" hidden>Naršyklė neleidžia išsaugoti progreso. Šiame lange jis veiks, bet perkrovus puslapį neišliks.</p>
+        <noscript><p class="storage-notice">Visus etapus gali skaityti žemiau. Paieškai, filtrams ir progreso išsaugojimui įjunk JavaScript.</p></noscript>
+
+        <div class="toolbar">
+            <div class="filters" role="group" aria-label="Filtruoti etapus pagal kategoriją">
+                <button class="filter active" type="button" data-filter="all" aria-pressed="true">Visi etapai <span>8</span></button>
+                <button class="filter" type="button" data-filter="discover" aria-pressed="false"><i class="category-dot discover"></i>Kryptis</button>
+                <button class="filter" type="button" data-filter="create" aria-pressed="false"><i class="category-dot create"></i>Kūrimas</button>
+                <button class="filter" type="button" data-filter="validate" aria-pressed="false"><i class="category-dot validate"></i>Kokybė</button>
+                <button class="filter" type="button" data-filter="deliver" aria-pressed="false"><i class="category-dot deliver"></i>Paleidimas</button>
+            </div>
+            <div class="search-field"><svg class="icon"><use href="#i-search"/></svg><label class="sr-only" for="stage-search">Ieškoti etapų</label><input id="stage-search" type="search" placeholder="Ieškoti etapo…" autocomplete="off"><kbd aria-hidden="true">/</kbd></div>
+        </div>
+        <p class="sr-only" id="search-status" role="status" aria-live="polite"></p>
+        <div class="stage-grid" id="stage-grid">
+            <article class="stage-card" th:each="stage : ${stages}" th:attr="data-stage=${stage.slug},data-category=${stage.category}" th:id="'stage-' + ${stage.slug}" th:classappend="${stage.category}">
+                <div class="card-top"><span class="stage-icon"><svg class="icon"><use th:href="'#i-' + ${stage.number}"/></svg></span><span class="stage-number" th:text="'0' + ${stage.number} + ' / 08'">01 / 08</span></div>
+                <span class="category-tag"><span class="category-dot"></span><span th:text="${stage.categoryLabel}">Kryptis</span></span>
+                <h3 th:text="${stage.title}">Idea</h3>
+                <p class="stage-description" th:text="${stage.description}"></p>
+                <ul class="stage-tips"><li th:each="tip : ${stage.tips}"><svg class="icon"><use href="#i-check"/></svg><span th:text="${tip}"></span></li></ul>
+                <div class="card-bottom">
+                    <button class="learn-more" type="button" th:attr="data-open=${stage.slug},aria-label='Sužinoti daugiau: ' + ${stage.title}" aria-haspopup="dialog">Sužinoti daugiau <svg class="icon"><use href="#i-arrow"/></svg></button>
+                    <button class="mark-reviewed" type="button" th:attr="data-review=${stage.slug},aria-label='Pažymėti etapą ' + ${stage.title} + ' kaip peržiūrėtą'" aria-pressed="false" title="Pažymėti kaip peržiūrėtą"><svg class="icon"><use href="#i-check"/></svg></button>
+                </div>
+                <details class="stage-details"><summary>Etapo paaiškinimas ir pavyzdys</summary><p class="detail-text" th:text="${stage.detail}"></p><pre class="detail-example" th:text="${stage.example}"></pre></details>
+            </article>
+        </div>
+        <div class="empty-state" id="empty-state" hidden><svg class="icon"><use href="#i-search"/></svg><h3>Šiame kelyje to neradome</h3><p>Pabandyk kitą žodį arba pasirink visus etapus.</p><button class="button button-secondary" type="button" id="clear-filters">Išvalyti paiešką ir filtrus</button></div>
+        <div class="journey-note"><span class="tiny-spark">✦</span><p>Kūrimas nėra tiesi linija. Grįžk, išbandyk, patobulink. <strong>Tai ir yra procesas.</strong></p></div>
+    </section>
+
+    <section class="about container" id="apie" aria-labelledby="about-title">
+        <div class="about-art" aria-hidden="true"><span>{</span><svg class="icon"><use href="#i-1"/></svg><span>}</span></div>
+        <div class="about-copy"><div class="eyebrow">NE MAGIJA. NAUJAS BŪDAS KURTI.</div><h2 id="about-title">Tu kuri kryptį. AI padeda judėti.</h2><p>Vibe coding — tai programavimas bendradarbiaujant su dirbtiniu intelektu. Tu formuluoji idėją, priimi sprendimus ir tikrini rezultatą. AI padeda rašyti kodą, tyrinėti galimybes ir mokytis greičiau.</p><p class="about-reminder">Nereikia žinoti visko, kad pradėtum. Bet svarbu suprasti tai, ką kuri.</p></div>
+        <a class="about-link" href="#kelias">Pirmyn, po žingsnį <svg class="icon"><use href="#i-arrow"/></svg></a>
+    </section>
+</main>
+
+<footer class="container site-footer"><a class="brand footer-brand" href="#pradzia"><span class="brand-mark"><svg class="icon"><use href="#i-code"/></svg></span><span>Navigator<span class="brand-dot">.</span></span></a><span>Sukurta smalsiems protams ir drąsioms idėjoms.</span><a href="#pradzia">Grįžti į viršų <span aria-hidden="true">↑</span></a></footer>
+
+<dialog id="stage-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+    <div class="dialog-header"><span class="dialog-eyebrow" id="dialog-eyebrow"></span><button type="button" class="dialog-close" id="dialog-close" aria-label="Uždaryti langą"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <h2 id="dialog-title"></h2><p id="dialog-description"></p>
+    <div class="dialog-section"><h3>Ką svarbu suprasti</h3><p id="dialog-detail"></p></div>
+    <div class="example-block"><div class="example-heading"><span><svg class="icon"><use href="#i-code"/></svg> PRAKTINIS PAVYZDYS</span><button id="copy-example" type="button">Kopijuoti</button></div><pre id="dialog-example"></pre></div>
+    <p class="copy-status sr-only" id="copy-status" role="status"></p>
+    <div class="dialog-footer"><span id="dialog-position"></span><button class="button button-primary" id="dialog-review" type="button"><svg class="icon"><use href="#i-check"/></svg><span>Pažymėti kaip peržiūrėtą</span></button></div>
+</dialog>
+</body>
+</html>
