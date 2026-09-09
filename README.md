@@ -112,6 +112,12 @@ Unix aplinkoje atitinkamai naudok `sh ./mvnw test` arba `sh ./mvnw clean verify`
 
 Testai nepaleidžia ilgai veikiančio serverio ir neužima 8080 prievado. MockMvc nevykdo JavaScript: filtrus, klaviatūros valdymą, mobilų vaizdą ir pažangos išsaugojimą reikia papildomai patikrinti naršyklėje.
 
+Mažas frontend paieškos regresijos testas naudoja tik integruotus Node.js modulius (Node.js 18+), be `npm install`. Jis vykdo tikrą `app.js` su minimaliu DOM pakaitalu: tikrina matomo turinio paiešką, paslėptų detalių atmetimą, lietuvišką tekstą ir kategorijų filtrų derinimą. Tai nėra tikros naršyklės patikros pakaitalas ir nėra Maven testų dalis:
+
+```powershell
+node --test src/test/js/search.test.cjs
+```
+
 Supakuoto projekto paleidimas po sėkmingo `clean verify`:
 
 ```powershell
