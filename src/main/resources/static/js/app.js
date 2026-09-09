@@ -81,9 +81,7 @@
         card.querySelector('h3').textContent,
         card.querySelector('.category-tag').textContent,
         card.querySelector('.stage-description').textContent,
-        card.querySelector('.stage-tips').textContent,
-        card.querySelector('.detail-text').textContent,
-        card.querySelector('.detail-example').textContent
+        card.querySelector('.stage-tips').textContent
     ].join(' '))]));
 
     function applyFilters() {
