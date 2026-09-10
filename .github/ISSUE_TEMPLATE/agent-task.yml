@@ -1,0 +1,50 @@
+name: Agent task
+description: Structured implementation task for AI coding agents
+title: "[task]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for implementation work. The coding agent must read `AGENTS.md` before making changes.
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What outcome should exist when the task is complete?
+      placeholder: Describe the desired end state.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What should and should not change?
+      placeholder: Define boundaries and relevant files/components.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Concrete conditions that must be true before the PR is ready.
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Required validation
+      description: Exact tests or checks the agent must run.
+      placeholder: List commands and manual checks.
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Constraints / risks
+      description: Safety, compatibility, or architectural constraints.
+      placeholder: Note anything the agent must not change or must preserve.
+    validations:
+      required: false
