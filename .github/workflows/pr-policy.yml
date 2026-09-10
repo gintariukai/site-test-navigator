@@ -1,0 +1,46 @@
+name: PR Policy
+
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-policy-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate-pr-metadata:
+    name: Validate PR metadata
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check required PR sections and issue linkage
+        shell: bash
+        run: |
+          set -euo pipefail
+          body="$(jq -r '.pull_request.body // ""' "$GITHUB_EVENT_PATH")"
+
+          required_sections=(
+            "## Summary"
+            "## Changed files"
+            "## Validation"
+            "## Risks / limitations"
+          )
+
+          for section in "${required_sections[@]}"; do
+            if ! grep -Fqi "$section" <<<"$body"; then
+              echo "Missing required PR section: $section"
+              exit 1
+            fi
+          done
+
+          if ! grep -Eqi '(closes|fixes|resolves)[[:space:]]+#[0-9]+' <<<"$body"; then
+            echo "PR must link its implementation issue using Closes #N, Fixes #N, or Resolves #N."
+            exit 1
+          fi
+
+          echo "PR metadata policy passed."
