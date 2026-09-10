@@ -6,11 +6,23 @@ body:
     attributes:
       value: |
         Use this form for implementation work. The coding agent must read `AGENTS.md` before making changes.
+  - type: dropdown
+    id: execution-tier
+    attributes:
+      label: Execution tier
+      description: Supervisor-selected Codex routing tier. See AGENTS.md.
+      options:
+        - Routine
+        - Standard
+        - Deep
+      default: 1
+    validations:
+      required: true
   - type: textarea
     id: goal
     attributes:
       label: Goal
-      description: What outcome should exist when the task is complete?
+      description: State the desired outcome briefly. Do not repeat global rules from AGENTS.md.
       placeholder: Describe the desired end state.
     validations:
       required: true

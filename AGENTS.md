@@ -10,6 +10,27 @@ This repository is operated with an AI-assisted workflow. Human interaction shou
 - All implementation work must happen on a dedicated feature/fix/chore branch and through a Pull Request.
 - GitHub Issues are the canonical implementation specification. Chat messages are not the source of truth once an Issue exists.
 
+## Execution routing
+
+The supervisor assigns each Issue an execution tier before handoff:
+
+- **Routine** — narrow, mechanical, low-risk work such as docs, CSS-only cleanup, workflow YAML, small tests, or straightforward refactoring. Use the smallest/cheapest supported Codex model that can reliably complete the task, with low-to-medium reasoning.
+- **Standard** — normal feature or bug work spanning multiple files or requiring moderate reasoning. Use the default capable Codex coding model with medium reasoning.
+- **Deep** — architecture, security-sensitive changes, difficult debugging, large refactors, migrations, or work where an incorrect implementation has material consequences. Use the strongest available Codex model with high reasoning.
+
+Do not hard-code a specific model family in repository rules because available Codex models change over time. If the Issue has no tier, treat it as **Standard**. The supervisor may override the tier when task complexity changes.
+
+The initial worker handoff should stay short because the Issue and this file are the source of truth:
+
+```text
+Work on GitHub issue #N in this repository.
+Follow AGENTS.md.
+Implement it completely and open a PR to master.
+Do not merge.
+```
+
+For follow-up work after a review, do not re-audit the whole repository unless the review explicitly requires it. Focus on the requested findings and the delta since the previous review, prioritizing P0-P2 issues.
+
 ## Agent workflow
 1. Read this file and the relevant GitHub Issue completely before changing code.
 2. Inspect the current repository state and existing tests.
@@ -46,6 +67,7 @@ GitHub Actions CI and PR Policy are independent repository gates. A local pass d
 - Do not add large frameworks or dependencies for a small task unless explicitly justified.
 - Preserve the `/api/stages` contract unless the Issue explicitly changes it.
 - Prefer minimal, reviewable changes over broad refactoring.
+- Keep one focused Issue mapped to one focused PR; split materially separate work instead of expanding scope.
 - Do not bypass CI or PR Policy to make a PR appear ready.
 - Do not merge, enable auto-merge, create releases, or create version tags unless explicitly authorized by the supervisor.
 
