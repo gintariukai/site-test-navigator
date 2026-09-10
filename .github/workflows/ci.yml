@@ -37,6 +37,80 @@ jobs:
       - name: Build and test Java
         run: ./mvnw clean verify
 
+      - name: Smoke test packaged application
+        shell: bash
+        run: |
+          set -euo pipefail
+          app_log="$RUNNER_TEMP/application-smoke.log"
+          stages_json="$RUNNER_TEMP/application-smoke-stages.json"
+          app_pid=''
+
+          cleanup() {
+            status=$?
+            trap - EXIT INT TERM
+            if [[ -n "$app_pid" ]]; then
+              kill "$app_pid" 2>/dev/null || true
+              for attempt in {1..5}; do
+                if ! kill -0 "$app_pid" 2>/dev/null; then
+                  break
+                fi
+                sleep 1
+              done
+              kill -KILL "$app_pid" 2>/dev/null || true
+              wait "$app_pid" 2>/dev/null || true
+            fi
+            if (( status != 0 )); then
+              echo '::group::Packaged application log'
+              cat "$app_log"
+              echo '::endgroup::'
+            fi
+            exit "$status"
+          }
+          trap cleanup EXIT
+          trap 'exit 130' INT
+          trap 'exit 143' TERM
+          : > "$app_log"
+
+          shopt -s nullglob
+          jars=(target/*.jar)
+          if (( ${#jars[@]} != 1 )); then
+            echo "Expected exactly one packaged JAR, found ${#jars[@]}."
+            exit 1
+          fi
+
+          java -jar "${jars[0]}" --server.address=127.0.0.1 --server.port=18080 > "$app_log" 2>&1 &
+          app_pid=$!
+          base_url='http://127.0.0.1:18080'
+          deadline=$((SECONDS + 60))
+          ready=false
+          while (( SECONDS < deadline )); do
+            if ! kill -0 "$app_pid" 2>/dev/null; then
+              echo 'Packaged application exited before becoming ready.'
+              exit 1
+            fi
+            if home_status=$(curl --silent --output /dev/null --write-out '%{http_code}' --connect-timeout 1 --max-time 2 "$base_url/") && [[ "$home_status" == 200 ]]; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+          if [[ "$ready" != true ]]; then
+            echo 'Timed out waiting for GET / to return HTTP 200 (60-second startup window).'
+            exit 1
+          fi
+          echo 'GET / returned HTTP 200.'
+
+          api_status=$(curl --silent --show-error --output "$stages_json" --write-out '%{http_code}' --connect-timeout 1 --max-time 5 "$base_url/api/stages")
+          if [[ "$api_status" != 200 ]]; then
+            echo "Expected GET /api/stages HTTP 200, got $api_status."
+            exit 1
+          fi
+          if ! jq -e 'type == "array" and length == 8 and all(.[]; type == "object")' "$stages_json"; then
+            echo 'Expected GET /api/stages to contain exactly 8 stage objects.'
+            exit 1
+          fi
+          echo 'GET /api/stages returned HTTP 200 and exactly 8 stage objects.'
+
       - name: Set up Node.js 24
         uses: actions/setup-node@v7
         with:
