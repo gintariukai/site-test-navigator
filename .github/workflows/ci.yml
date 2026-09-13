@@ -119,3 +119,15 @@ jobs:
 
       - name: Test frontend search
         run: node --test src/test/js/search.test.cjs
+
+      - name: Install supervisor dependencies
+        working-directory: supervisor
+        run: npm ci
+
+      - name: Typecheck supervisor Worker
+        working-directory: supervisor
+        run: npm run typecheck
+
+      - name: Test supervisor Worker
+        working-directory: supervisor
+        run: npm test
