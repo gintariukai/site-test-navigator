@@ -1,10 +1,10 @@
 import type { OpenAiClassifier } from "./classifier";
 import type { Decision, GitHubPayload, PullRequestState } from "./types";
 
-const FAILURE_CONCLUSIONS = new Set(["failure", "timed_out", "cancelled", "action_required", "startup_failure"]);
 const SUCCESS_CONCLUSIONS = new Set(["success", "neutral", "skipped"]);
-const EXPLICIT_PRIORITY = /(?:^|\s|[([])P([0-2])(?:\b|[\]):])/i;
 const TRUSTED_ASSOCIATIONS = new Set(["OWNER", "MEMBER", "COLLABORATOR"]);
+const IMPLEMENTATION_CHECK = /\b(?:build|compile|lint|test|typecheck|validation|verify)\b/i;
+const NON_IMPLEMENTATION_CHECK = /\b(?:pr policy|policy|deploy(?:ment)?|release|infrastructure|approval)\b/i;
 
 export async function decide(
   event: string,
@@ -14,7 +14,13 @@ export async function decide(
 ): Promise<Decision> {
   if (!state.open) return { kind: "IGNORE", reason: "Pull request is not open" };
 
-  const failedChecks = state.checks.filter((check) => FAILURE_CONCLUSIONS.has(check.conclusion ?? ""));
+  const failedChecks = state.checks.filter(
+    (check) =>
+      check.status === "completed" &&
+      check.conclusion === "failure" &&
+      IMPLEMENTATION_CHECK.test(check.name) &&
+      !NON_IMPLEMENTATION_CHECK.test(check.name),
+  );
   if ((event === "check_run" || event === "workflow_run") && failedChecks.length > 0) {
     const finding = `Fix only these implementation-related failing checks: ${failedChecks
       .map((check) => `${check.name} (${check.htmlUrl})`)
@@ -31,19 +37,11 @@ export async function decide(
     if (!TRUSTED_ASSOCIATIONS.has(reviewText.authorAssociation)) {
       return { kind: "IGNORE", reason: "Conversation item is not from a trusted repository collaborator" };
     }
-    if (EXPLICIT_PRIORITY.test(reviewText.body)) {
-      return {
-        kind: "DISPATCH_CODEX",
-        finding: `Address only this actionable P0-P2 review finding: ${reviewText.body.slice(0, 2000)} (${reviewText.htmlUrl}).`,
-        findingKey: `review:${reviewText.id}`,
-      };
-    }
-
     const semantic = await classifier.classifyReview(reviewText.body);
     if (semantic.category === "ACTIONABLE_REVIEW") {
       return {
         kind: "DISPATCH_CODEX",
-        finding: `Address only this actionable P0-P2 review finding: ${semantic.summary} (${reviewText.htmlUrl}).`,
+        finding: `Address the concrete implementation finding at ${reviewText.htmlUrl.slice(0, 500)}.`,
         findingKey: `review:${reviewText.id}`,
       };
     }
