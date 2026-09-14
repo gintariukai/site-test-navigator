@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "site-test-navigator-supervisor",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-12",
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "vars": {
+    "ALLOWED_REPOSITORY": "gintariukai/site-test-navigator",
+    "OPENAI_MODEL": "gpt-5-mini"
+  },
+  "d1_databases": [
+    {
+      "binding": "IDEMPOTENCY_DB",
+      "database_name": "site-test-navigator-supervisor",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
